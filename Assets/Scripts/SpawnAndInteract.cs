@@ -43,8 +43,8 @@ public class SpawnAndInteract : MonoBehaviour
             */
             
             spawnedObject.AddComponent<TeleportationArea>();
-            
-            SetLayerRecursively(spawnedObject, LayerMask.NameToLayer("Teleport"));
+            spawnedObject.layer = LayerMask.NameToLayer("Grabbeable");
+            //SetLayerRecursively(spawnedObject, LayerMask.NameToLayer("Teleport"));
 
 
             spawnedObject.SetActive(true);
