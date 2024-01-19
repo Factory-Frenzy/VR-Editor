@@ -10,7 +10,7 @@ public class SpawnAndInteract : MonoBehaviour
         Transform transform = player.transform;
         
         // Récupére la position devant le joueur
-        Vector3 spawnPosition = transform.position + transform.forward * 3.5f;
+        Vector3 spawnPosition = transform.position + transform.forward * 8f;
         
         // Créer une rotation à partir de l'angle normalisé devant le joueur
         float angle = Mathf.Round(transform.eulerAngles.y / 90) * 90;

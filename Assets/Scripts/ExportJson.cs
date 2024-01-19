@@ -1,19 +1,30 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine.InputSystem;
 using Formatting = Newtonsoft.Json.Formatting;
 
 public class ExportJson : MonoBehaviour
 {
     [SerializeField] private string fileName = "map.json";
     
-    void Update()
+    public InputActionReference saveRef;
+    private InputAction _save;
+
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            ExportMapObjects();
-        }
+        _save = saveRef.action;
+        _save.Enable();
+        _save.performed += OnSave;
+    }
+
+    private void OnSave(InputAction.CallbackContext obj)
+    {
+        // todo: use save menu
+        print("OnSave");
+        ExportMapObjects();
     }
 
     void ExportMapObjects()
