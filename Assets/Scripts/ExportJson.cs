@@ -3,31 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
-using UnityEngine.InputSystem;
 using Formatting = Newtonsoft.Json.Formatting;
 
 public class ExportJson : MonoBehaviour
 {
-    [SerializeField] private string fileName = "map.json";
-    
-    public InputActionReference saveRef;
-    private InputAction _save;
-
-    private void Start()
-    {
-        _save = saveRef.action;
-        _save.Enable();
-        _save.performed += OnSave;
-    }
-
-    private void OnSave(InputAction.CallbackContext obj)
-    {
-        // todo: use save menu
-        print("OnSave");
-        ExportMapObjects();
-    }
-
-    void ExportMapObjects()
+    public static void ExportMapObjects(String fileName)
     {
         // Récupère tous les GameObjects avec le tag "MapObject"
         GameObject[] mapObjects = GameObject.FindGameObjectsWithTag("MapObject");
@@ -65,7 +45,7 @@ public class ExportJson : MonoBehaviour
         Debug.Log("Exportation terminée. Données enregistrées dans " + filePath);
     }
 
-    [System.Serializable]
+    [Serializable]
     public class MapObjectData
     {
         public string name;

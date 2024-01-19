@@ -17,7 +17,6 @@ namespace Menu
         
         protected override void Start()
         {
-            print("Start PlatformsMenu");
             base.Start();
             classicPlatformButton.onClick.AddListener(OnSpawnClassicPlatform);
             startPlatformButton.onClick.AddListener(OnSpawnStartPlatformPlatform);

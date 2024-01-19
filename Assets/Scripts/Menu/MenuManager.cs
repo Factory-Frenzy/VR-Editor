@@ -8,6 +8,7 @@ namespace Menu
         public MainMenu menu;
         public PlatformsMenu platformsMenu;
         public TrapsMenu trapsMenu;
+        public SaveMenu saveMenu;
         
         public InputActionReference openMainMenuRef;
         private InputAction _openMainMenu;
@@ -42,6 +43,7 @@ namespace Menu
            menu.Show(obj.ReadValueAsButton()); // todo: or true
            platformsMenu.Show(false);
            trapsMenu.Show(false);
+           saveMenu.Show(false);
         }
 
         public void OpenPlatformsMenu()
@@ -49,6 +51,7 @@ namespace Menu
             menu.Show(false);
             platformsMenu.Show(true);
             trapsMenu.Show(false);
+            saveMenu.Show(false);
         }
 
         public void OpenTrapsMenu()
@@ -56,6 +59,15 @@ namespace Menu
             menu.Show(false);
             platformsMenu.Show(false);
             trapsMenu.Show(true);
+            saveMenu.Show(false);
+        } 
+        
+        public void OpenSaveMenu()
+        {
+            menu.Show(false);
+            platformsMenu.Show(false);
+            trapsMenu.Show(false);
+            saveMenu.Show(true);
         } 
     }
 }

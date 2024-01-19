@@ -19,7 +19,6 @@ namespace Menu
 
         protected override void Start()
         {
-            print("Start TrapsMenu");
             base.Start();
             bumperButton.onClick.AddListener(OnSpawnBumper);
             lancerButton.onClick.AddListener(OnSpawnLancer);
