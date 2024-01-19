@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
+using UnityEditor;
 using Formatting = Newtonsoft.Json.Formatting;
 
 public class ExportJson : MonoBehaviour
@@ -29,8 +30,9 @@ public class ExportJson : MonoBehaviour
         {
             MapObjectData mapObjectData = new MapObjectData
             {
-                name = mapObject.name,
-                position = mapObject.transform.position
+                name = mapObject.name.Replace("(Clone)", ""),
+                position = mapObject.transform.position,
+                rotation = mapObject.transform.rotation
             };
 
             mapObjectDataList.Add(mapObjectData);
@@ -59,5 +61,6 @@ public class ExportJson : MonoBehaviour
     {
         public string name;
         public Vector3 position;
+        public Quaternion rotation;
     }
 }
