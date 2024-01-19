@@ -2600,6 +2600,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Menu",
+            "id": "31247ec0-4f58-4499-9f9d-54ab576970d7",
+            "actions": [
+                {
+                    "name": "Open",
+                    "type": "Button",
+                    "id": "83b0984e-4a3d-4f43-9d7e-112ef2c49fb5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "15fca4bc-9a43-4b29-a459-995a11503c31",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Open",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

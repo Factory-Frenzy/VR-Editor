@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -7,17 +8,7 @@ using Formatting = Newtonsoft.Json.Formatting;
 
 public class ExportJson : MonoBehaviour
 {
-    [SerializeField] private string fileName = "map.json";
-    
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            ExportMapObjects();
-        }
-    }
-
-    void ExportMapObjects()
+    public static void ExportMapObjects(String fileName)
     {
         // Récupère tous les GameObjects avec le tag "MapObject"
         GameObject[] mapObjects = GameObject.FindGameObjectsWithTag("MapObject");
@@ -56,7 +47,7 @@ public class ExportJson : MonoBehaviour
         Debug.Log("Exportation terminée. Données enregistrées dans " + filePath);
     }
 
-    [System.Serializable]
+    [Serializable]
     public class MapObjectData
     {
         public string name;

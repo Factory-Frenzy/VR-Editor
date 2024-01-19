@@ -1,63 +1,52 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-using System.Collections.Generic;
 
 public class SpawnAndInteract : MonoBehaviour
 {
-    public List<GameObject> prefabsToSpawn;
-
-    void Update()
+    public void SpawnAndInteractPrefabs(GameObject prefabToSpawn)
     {
-        // todo: remove test
-        if (Input.GetKeyDown(KeyCode.Space))
+        GameObject player = GameObject.FindGameObjectWithTag("MainCamera");
+        
+        Transform transform = player.transform;
+        
+        // Récupére la position devant le joueur
+        Vector3 spawnPosition = transform.position + transform.forward * 8f;
+        
+        // Créer une rotation à partir de l'angle normalisé devant le joueur
+        float angle = Mathf.Round(transform.eulerAngles.y / 90) * 90;
+        Quaternion rotation = Quaternion.Euler(0, angle, 0);
+        
+        print("spawnPosition " + spawnPosition);
+        GameObject spawnedObject = Instantiate(prefabToSpawn, spawnPosition, rotation);
+
+        spawnedObject.tag = "MapObject";
+        XRGrabInteractable xrGrabInteractable = spawnedObject.AddComponent<XRGrabInteractable>();
+        xrGrabInteractable.trackRotation = false;
+
+        /*
+        Rigidbody rigidbody = spawnedObject.GetComponent<Rigidbody>();
+
+        if (rigidbody != null)
         {
-            SpawnAndInteractPrefabs();
+            rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+            rigidbody.useGravity = false;
+            rigidbody.isKinematic = true;
         }
+        */
+
+        spawnedObject.AddComponent<TeleportationArea>();
+        SetLayerRecursively(spawnedObject, LayerMask.NameToLayer("Grabbable"));
+        
+        spawnedObject.SetActive(true);
     }
 
-    void SpawnAndInteractPrefabs()
+    // Fonction récursive pour définir le layer de l'objet et de ses enfants
+    void SetLayerRecursively(GameObject obj, int layer)
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-        Vector3 playerPosition = player.transform.position;
-        playerPosition.y += 5;
-        print("spawn at: " + playerPosition);
-
-        foreach (GameObject prefabToSpawn in prefabsToSpawn)
+        obj.layer = layer;
+        foreach (Transform child in obj.transform)
         {
-            GameObject spawnedObject = Instantiate(prefabToSpawn, playerPosition, Quaternion.identity);
-
-            spawnedObject.tag = "MapObject";
-            XRGrabInteractable xrGrabInteractable = spawnedObject.AddComponent<XRGrabInteractable>();
-            xrGrabInteractable.trackRotation = false;
-
-            /*
-            Rigidbody rigidbody = spawnedObject.GetComponent<Rigidbody>();
-
-            if (rigidbody != null)
-            {
-                rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-                rigidbody.useGravity = false;
-                rigidbody.isKinematic = true;
-            }
-            */
-            
-            spawnedObject.AddComponent<TeleportationArea>();
-            spawnedObject.layer = LayerMask.NameToLayer("Grabbeable");
-            //SetLayerRecursively(spawnedObject, LayerMask.NameToLayer("Teleport"));
-
-
-            spawnedObject.SetActive(true);
-        }
-        
-        // Fonction récursive pour définir le layer de l'objet et de ses enfants
-        void SetLayerRecursively(GameObject obj, int layer)
-        {
-            obj.layer = layer;
-            foreach (Transform child in obj.transform)
-            {
-                SetLayerRecursively(child.gameObject, layer);
-            }
+            SetLayerRecursively(child.gameObject, layer);
         }
     }
 }
