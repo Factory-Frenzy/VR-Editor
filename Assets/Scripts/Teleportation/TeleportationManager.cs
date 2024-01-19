@@ -18,6 +18,8 @@ namespace Teleportation
         private bool isActive;
 
         XRInteractorLineVisual lineVisual;
+        
+        [SerializeField] private GrabManager grabManager;
 
         void Start()
         {
@@ -45,6 +47,11 @@ namespace Teleportation
         {
             if (!isActive)
                 return;
+
+            if (grabManager.IsGrab())
+            {
+                return;
+            }
 
             RaycastHit hit;
 
@@ -84,11 +91,13 @@ namespace Teleportation
 
         private void OnTeleportActivate(InputAction.CallbackContext ctx)
         {
+            if (grabManager.IsGrab()) return;
             setActiveTeleport(true);
         }
 
         private void OnTeleportCancel(InputAction.CallbackContext ctx)
         {
+            if (grabManager.IsGrab()) return;
             setActiveTeleport(false);
         }
     }

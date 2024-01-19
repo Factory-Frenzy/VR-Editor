@@ -3,17 +3,21 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class SpawnAndInteract : MonoBehaviour
 {
-    //public List<GameObject> prefabsToSpawn;
-
     public void SpawnAndInteractPrefabs(GameObject prefabToSpawn)
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-        Vector3 playerPosition = player.transform.position;
-        playerPosition.y += 5;
-        print("spawn at: " + playerPosition);
-
-        GameObject spawnedObject = Instantiate(prefabToSpawn, playerPosition, Quaternion.identity);
+        GameObject player = GameObject.FindGameObjectWithTag("MainCamera");
+        
+        Transform transform = player.transform;
+        
+        // Récupére la position devant le joueur
+        Vector3 spawnPosition = transform.position + transform.forward * 3.5f;
+        
+        // Créer une rotation à partir de l'angle normalisé devant le joueur
+        float angle = Mathf.Round(transform.eulerAngles.y / 90) * 90;
+        Quaternion rotation = Quaternion.Euler(0, angle, 0);
+        
+        print("spawnPosition " + spawnPosition);
+        GameObject spawnedObject = Instantiate(prefabToSpawn, spawnPosition, rotation);
 
         spawnedObject.tag = "MapObject";
         XRGrabInteractable xrGrabInteractable = spawnedObject.AddComponent<XRGrabInteractable>();

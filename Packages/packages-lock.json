@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "a47be92b93a308c224f2e7f7c8548b4720ae436b"
+      "hash": "a10fa33c12974319eafbe4126f61559238fa3887"
     },
     "com.unity.burst": {
       "version": "1.8.11",
@@ -67,6 +67,13 @@
     "com.unity.mathematics": {
       "version": "1.2.6",
       "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.mobile.android-logcat": {
+      "version": "1.4.0",
+      "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"

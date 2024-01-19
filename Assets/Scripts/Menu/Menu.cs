@@ -8,7 +8,9 @@ namespace Menu
         public Button backButton;
         public Button closeButton;
 
-        private void Start()
+        private bool _isOpen;
+
+        protected virtual void Start()
         {
             Show(false);
 
@@ -36,6 +38,12 @@ namespace Menu
         public void Show(bool value)
         {
             gameObject.SetActive(value);
+            _isOpen = value;
+        }
+
+        public bool IsOpen()
+        {
+            return _isOpen;
         }
     }
 }

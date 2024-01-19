@@ -15,9 +15,10 @@ namespace Menu
 
         public SpawnAndInteract spawnAndInteract;
         
-        private void Start()
+        protected override void Start()
         {
-            // base.Start();
+            print("Start PlatformsMenu");
+            base.Start();
             classicPlatformButton.onClick.AddListener(OnSpawnClassicPlatform);
             startPlatformButton.onClick.AddListener(OnSpawnStartPlatformPlatform);
             endPlatformButton.onClick.AddListener(OnSpawnEndPlatform);
