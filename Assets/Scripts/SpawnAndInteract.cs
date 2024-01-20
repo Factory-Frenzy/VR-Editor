@@ -40,6 +40,7 @@ public class SpawnAndInteract : MonoBehaviour
         spawnedObject.AddComponent<TeleportationArea>();
         SetLayerRecursively(spawnedObject, LayerMask.NameToLayer("Grabbable"));
         
+        spawnedObject.GetComponent<Rigidbody>().freezeRotation = true;
         spawnedObject.SetActive(true);
         
         soundManager.PlaySpawnSound();
