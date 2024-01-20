@@ -31,12 +31,16 @@ namespace Menu
         
         private void OnSpawnStartPlatformPlatform()
         {
+            GameObject exist = GameObject.Find(startPlatformObj.name + "(Clone)");
+            if (exist) return;
             spawnAndInteract.SpawnAndInteractPrefabs(startPlatformObj);
             Show(false);
         }
         
         private void OnSpawnEndPlatform()
         {
+            GameObject exist = GameObject.Find(endPlatformObj.name + "(Clone)");
+            if (exist) return;
             spawnAndInteract.SpawnAndInteractPrefabs(endPlatformObj);
             Show(false);
         }
