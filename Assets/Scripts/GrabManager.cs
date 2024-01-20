@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -9,15 +10,18 @@ public class GrabManager : MonoBehaviour
     public InputActionReference joystickRef;
     private InputAction _joystick;
 
+    public SoundManager soundManager;
 
     public void OnGrabEnter(SelectEnterEventArgs args)
     {
         _isGrab = true;
+        soundManager.VibrateController(ControllerHand.Right, 0.5f, 0.25f);
     }
 
     public void OnGrabExit(SelectExitEventArgs args)
     {
         _isGrab = false;
+        soundManager.VibrateController(ControllerHand.Right, 0.5f, 0.25f);
     }
 
     public bool IsGrab()
@@ -72,6 +76,7 @@ public class GrabManager : MonoBehaviour
 
             // Faire pivoter le GameObject en grab dans la direction correspondante
             interactable.transform.rotation = Quaternion.Euler(0f, closestAngle, 0f);
+            soundManager.VibrateController(ControllerHand.Right, 0.5f, 0.25f);
         }
     }
 }

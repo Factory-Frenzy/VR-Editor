@@ -1,8 +1,11 @@
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class SpawnAndInteract : MonoBehaviour
 {
+    public SoundManager soundManager;
+    
     public void SpawnAndInteractPrefabs(GameObject prefabToSpawn)
     {
         GameObject player = GameObject.FindGameObjectWithTag("MainCamera");
@@ -38,6 +41,8 @@ public class SpawnAndInteract : MonoBehaviour
         SetLayerRecursively(spawnedObject, LayerMask.NameToLayer("Grabbable"));
         
         spawnedObject.SetActive(true);
+        
+        soundManager.PlaySpawnSound();
     }
 
     // Fonction récursive pour définir le layer de l'objet et de ses enfants
