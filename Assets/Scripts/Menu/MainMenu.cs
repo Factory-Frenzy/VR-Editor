@@ -25,6 +25,7 @@ namespace Menu
         private void SpawnCheckpoint()
         {
             spawnAndInteract.SpawnAndInteractPrefabs(checkpointGameObject);
+            Show(false);
         }
 
         private void OpenPlatformsMenu()
