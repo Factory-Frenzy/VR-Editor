@@ -42,6 +42,7 @@ public class SpawnAndInteract : MonoBehaviour
         
         spawnedObject.GetComponent<Rigidbody>().freezeRotation = true;
         spawnedObject.SetActive(true);
+        spawnedObject.AddComponent<LockUnlockObject>();
         
         soundManager.PlaySpawnSound();
     }

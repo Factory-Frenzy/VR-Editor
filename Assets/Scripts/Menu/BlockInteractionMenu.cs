@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,7 +29,7 @@ namespace Menu
 
         private void OnLockUnlock()
         {
-            // todo: lock / unlock a game object
+            LockManager.SetObjectLock(_currentGameObject, !LockManager.IsObjectLocked(_currentGameObject));
             Show(false);
         }
 
