@@ -10,5 +10,5 @@ FP1
 
 FP2
 - [ ] VR-FP2-1 : Placement et snap
-- [ ] VR-FP2-2 : Verrouiller un élément
+- [X] VR-FP2-2 : Verrouiller un élément
 - [ ] VR-FP2-3 : Paramétrage de la plateforme mobile
