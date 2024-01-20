@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace Teleportation
@@ -19,7 +20,7 @@ namespace Teleportation
 
         XRInteractorLineVisual lineVisual;
         
-        [SerializeField] private GrabManager grabManager;
+        [FormerlySerializedAs("grabManager")] [SerializeField] private InteractionManager interactionManager;
 
         void Start()
         {
@@ -48,7 +49,7 @@ namespace Teleportation
             if (!isActive)
                 return;
 
-            if (grabManager.IsGrab())
+            if (interactionManager.IsGrab())
             {
                 return;
             }
@@ -91,13 +92,13 @@ namespace Teleportation
 
         private void OnTeleportActivate(InputAction.CallbackContext ctx)
         {
-            if (grabManager.IsGrab()) return;
+            if (interactionManager.IsGrab()) return;
             setActiveTeleport(true);
         }
 
         private void OnTeleportCancel(InputAction.CallbackContext ctx)
         {
-            if (grabManager.IsGrab()) return;
+            if (interactionManager.IsGrab()) return;
             setActiveTeleport(false);
         }
     }

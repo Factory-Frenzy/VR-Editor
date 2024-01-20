@@ -1,14 +1,19 @@
 using DefaultNamespace;
+using Menu;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class GrabManager : MonoBehaviour
+public class InteractionManager : MonoBehaviour
 {
     private bool _isGrab;
     
     public InputActionReference joystickRef;
     private InputAction _joystick;
+    
+    public InputActionReference selectRef;
+    private InputAction _select;
 
     public SoundManager soundManager;
 
@@ -34,21 +39,46 @@ public class GrabManager : MonoBehaviour
         _joystick = joystickRef.action;
         _joystick.Enable();
         _joystick.performed += OnJoyStickMove;
+        
+        _select = selectRef.action;
+        _select.Enable();
+        _select.performed += OnSelect;
+    }
+    
+    private XRBaseInteractable GetCurrentInteractable()
+    {
+        XRRayInteractor xrRayInteractor = GetComponent<XRRayInteractor>();
+        RaycastHit hit;
+        if (!xrRayInteractor.TryGetCurrent3DRaycastHit(out hit)) return null;
+        
+        XRBaseInteractable interactable = hit.collider.GetComponentInParent<XRBaseInteractable>();
+
+        return interactable;
+    }
+
+    private void OnSelect(InputAction.CallbackContext obj)
+    {
+        print("OnSelect");
+
+        var interactable = GetCurrentInteractable();
+        if (!interactable) return;
+
+        print("inter " + interactable.name);
+        
+        MenuManager.Instance().OpenBlockInteractionMenu(interactable.gameObject);
     }
 
     private void OnJoyStickMove(InputAction.CallbackContext context)
     {
         print("OnJoyStickMove: " + context.ReadValue<Vector2>());
-        XRRayInteractor xrRayInteractor = GetComponent<XRRayInteractor>();
-        RaycastHit hit;
-        if (!xrRayInteractor.TryGetCurrent3DRaycastHit(out hit)) return;
         
-        // Obtenir les données du joystick
-        Vector2 joystickValue = context.ReadValue<Vector2>();
+        var interactable = GetCurrentInteractable();
+        if (!interactable) return;
         
-        var interactable = hit.collider.GetComponentInParent<XRBaseInteractable>();
         if (interactable != null)
         {
+            // Obtenir les données du joystick
+            Vector2 joystickValue = context.ReadValue<Vector2>();
 
             // Calculer l'angle en radians en fonction des données du joystick
             float angle = Mathf.Atan2(joystickValue.y, joystickValue.x);

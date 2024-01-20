@@ -9,6 +9,7 @@ namespace Menu
         public PlatformsMenu platformsMenu;
         public TrapsMenu trapsMenu;
         public SaveMenu saveMenu;
+        public BlockInteractionMenu blockInteractionMenu;
         
         public InputActionReference openMainMenuRef;
         private InputAction _openMainMenu;
@@ -44,6 +45,7 @@ namespace Menu
            platformsMenu.Show(false);
            trapsMenu.Show(false);
            saveMenu.Show(false);
+           blockInteractionMenu.Show(false);
         }
 
         public void OpenPlatformsMenu()
@@ -52,6 +54,7 @@ namespace Menu
             platformsMenu.Show(true);
             trapsMenu.Show(false);
             saveMenu.Show(false);
+            blockInteractionMenu.Show(false);
         }
 
         public void OpenTrapsMenu()
@@ -60,6 +63,7 @@ namespace Menu
             platformsMenu.Show(false);
             trapsMenu.Show(true);
             saveMenu.Show(false);
+            blockInteractionMenu.Show(false);
         } 
         
         public void OpenSaveMenu()
@@ -68,6 +72,17 @@ namespace Menu
             platformsMenu.Show(false);
             trapsMenu.Show(false);
             saveMenu.Show(true);
-        } 
+            blockInteractionMenu.Show(false);
+        }
+
+        public void OpenBlockInteractionMenu(GameObject currentGameObject)
+        {
+            menu.Show(false);
+            platformsMenu.Show(false);
+            trapsMenu.Show(false);
+            saveMenu.Show(false);
+            blockInteractionMenu.Show(true);
+            blockInteractionMenu.SetGameObject(currentGameObject);
+        }
     }
 }
