@@ -14,6 +14,12 @@ namespace Menu
             base.Start();
             saveButton.onClick.AddListener(OnSave);
         }
+        
+        protected override void GoBack()
+        {
+            MenuManager.Instance().OpenMainMenu();
+            Show(false);
+        }
 
         private void OnSave()
         {

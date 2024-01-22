@@ -26,6 +26,12 @@ namespace Menu
             fanButton.onClick.AddListener(OnSpawnFan);
         }
         
+        protected override void GoBack()
+        {
+            MenuManager.Instance().OpenMainMenu();
+            Show(false);
+        }
+        
         private void OnSpawnBumper()
         {
             spawnAndInteract.SpawnAndInteractPrefabs(bumperObject);

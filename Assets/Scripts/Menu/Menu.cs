@@ -30,7 +30,7 @@ namespace Menu
             Show(false);
         }
 
-        private void GoBack()
+        protected virtual void GoBack()
         {
             throw new System.NotImplementedException();
         }

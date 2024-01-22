@@ -22,6 +22,12 @@ namespace Menu
             startPlatformButton.onClick.AddListener(OnSpawnStartPlatformPlatform);
             endPlatformButton.onClick.AddListener(OnSpawnEndPlatform);
         }
+        
+        protected override void GoBack()
+        {
+            MenuManager.Instance().OpenMainMenu();
+            Show(false);
+        }
 
         private void OnSpawnClassicPlatform()
         {

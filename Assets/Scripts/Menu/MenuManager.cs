@@ -40,16 +40,21 @@ namespace Menu
         
         private void OnOpenMainMenu(InputAction.CallbackContext obj)
         {
-           if (menu.IsOpen())
-           {
-               menu.Show(false);
-               return;
-           }
-           menu.Show(obj.ReadValueAsButton()); // todo: or true
-           platformsMenu.Show(false);
-           trapsMenu.Show(false);
-           saveMenu.Show(false);
-           blockInteractionMenu.Show(false);
+            OpenMainMenu();
+        }
+
+        public void OpenMainMenu()
+        {
+            if (menu.IsOpen())
+            {
+                menu.Show(false);
+                return;
+            }
+            menu.Show(true);
+            platformsMenu.Show(false);
+            trapsMenu.Show(false);
+            saveMenu.Show(false);
+            blockInteractionMenu.Show(false);
         }
 
         public void OpenPlatformsMenu()
