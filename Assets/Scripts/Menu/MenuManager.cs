@@ -77,6 +77,7 @@ namespace Menu
 
         public void OpenBlockInteractionMenu(GameObject currentGameObject)
         {
+            if (!currentGameObject) return;
             menu.Show(false);
             platformsMenu.Show(false);
             trapsMenu.Show(false);

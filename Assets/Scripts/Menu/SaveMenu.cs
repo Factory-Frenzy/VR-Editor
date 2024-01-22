@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Menu
@@ -16,8 +17,10 @@ namespace Menu
 
         private void OnSave()
         {
-            string fileName = inputField.text + ".json";
-            ExportJson.ExportMapObjects(fileName);
+            string mapName = inputField.text;
+            GameObject obj = GameObject.Find("ExportManager");
+            ExportJson exportJson = obj.GetComponent<ExportJson>();
+            exportJson.SaveMap(mapName);
             Show(false);
         }
     }
