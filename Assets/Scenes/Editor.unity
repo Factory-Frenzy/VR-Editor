@@ -1955,9 +1955,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_System: {fileID: 254078021}
   m_TurnAmount: 10
-  m_DebounceTime: 0.5
+  m_DebounceTime: 0.1
   m_EnableTurnLeftRight: 1
-  m_EnableTurnAround: 1
+  m_EnableTurnAround: 0
   m_DelayTime: 0
   m_LeftHandSnapTurnAction:
     m_UseReference: 0
@@ -6900,6 +6900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a38f4940604944ab941a490c65a54d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uploadPath: http://10.191.92.139:3000/upload
 --- !u!4 &848025543
 Transform:
   m_ObjectHideFlags: 0
