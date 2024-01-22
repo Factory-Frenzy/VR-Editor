@@ -40,7 +40,11 @@ namespace Menu
         
         private void OnOpenMainMenu(InputAction.CallbackContext obj)
         {
-           if (menu.IsOpen()) return;
+           if (menu.IsOpen())
+           {
+               menu.Show(false);
+               return;
+           }
            menu.Show(obj.ReadValueAsButton()); // todo: or true
            platformsMenu.Show(false);
            trapsMenu.Show(false);
