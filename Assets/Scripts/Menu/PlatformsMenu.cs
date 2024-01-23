@@ -8,12 +8,14 @@ namespace Menu
         public GameObject classicPlatformObject;
         public GameObject classic2PlatformObject;
         public GameObject classic3PlatformObject;
+        public GameObject movePlatformObject;
         public GameObject startPlatformObj;
         public GameObject endPlatformObj;
         
         public Button classicPlatformButton;
         public Button classic2PlatformButton;
         public Button classic3PlatformButton;
+        public Button movePlatformButton;
         public Button startPlatformButton;
         public Button endPlatformButton;
 
@@ -25,7 +27,8 @@ namespace Menu
             classicPlatformButton.onClick.AddListener(OnSpawnClassic80Platform);
             classic2PlatformButton.onClick.AddListener(OnSpawnClassic360Platform);
             classic3PlatformButton.onClick.AddListener(OnSpawnClassic520Platform);
-            startPlatformButton.onClick.AddListener(OnSpawnStartPlatformPlatform);
+            movePlatformButton.onClick.AddListener(OnSpawnMovePlatform);
+            startPlatformButton.onClick.AddListener(OnSpawnStartPlatform);
             endPlatformButton.onClick.AddListener(OnSpawnEndPlatform);
         }
         
@@ -53,7 +56,13 @@ namespace Menu
             Show(false);
         }
         
-        private void OnSpawnStartPlatformPlatform()
+        private void OnSpawnMovePlatform()
+        {
+            spawnAndInteract.SpawnAndInteractPrefabs(movePlatformObject);
+            Show(false);
+        }
+        
+        private void OnSpawnStartPlatform()
         {
             GameObject exist = GameObject.Find(startPlatformObj.name + "(Clone)");
             if (exist) return;
