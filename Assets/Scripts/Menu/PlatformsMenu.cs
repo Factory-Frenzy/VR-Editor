@@ -6,10 +6,14 @@ namespace Menu
     public class PlatformsMenu : Menu
     {
         public GameObject classicPlatformObject;
+        public GameObject classic2PlatformObject;
+        public GameObject classic3PlatformObject;
         public GameObject startPlatformObj;
         public GameObject endPlatformObj;
         
         public Button classicPlatformButton;
+        public Button classic2PlatformButton;
+        public Button classic3PlatformButton;
         public Button startPlatformButton;
         public Button endPlatformButton;
 
@@ -18,7 +22,9 @@ namespace Menu
         protected override void Start()
         {
             base.Start();
-            classicPlatformButton.onClick.AddListener(OnSpawnClassicPlatform);
+            classicPlatformButton.onClick.AddListener(OnSpawnClassic80Platform);
+            classic2PlatformButton.onClick.AddListener(OnSpawnClassic360Platform);
+            classic3PlatformButton.onClick.AddListener(OnSpawnClassic520Platform);
             startPlatformButton.onClick.AddListener(OnSpawnStartPlatformPlatform);
             endPlatformButton.onClick.AddListener(OnSpawnEndPlatform);
         }
@@ -29,9 +35,21 @@ namespace Menu
             Show(false);
         }
 
-        private void OnSpawnClassicPlatform()
+        private void OnSpawnClassic80Platform()
         {
             spawnAndInteract.SpawnAndInteractPrefabs(classicPlatformObject);
+            Show(false);
+        }
+        
+        private void OnSpawnClassic360Platform()
+        {
+            spawnAndInteract.SpawnAndInteractPrefabs(classic2PlatformObject);
+            Show(false);
+        }
+        
+        private void OnSpawnClassic520Platform()
+        {
+            spawnAndInteract.SpawnAndInteractPrefabs(classic3PlatformObject);
             Show(false);
         }
         
