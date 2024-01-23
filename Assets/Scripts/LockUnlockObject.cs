@@ -5,21 +5,21 @@ namespace DefaultNamespace
 {
     public class LockUnlockObject : MonoBehaviour
     {
-        private XRGrabInteractable grabInteractable;
+        private XRGrabInteractable _grabInteractable;
 
-        private bool isLocked = false;
+        private bool _isLocked;
 
         public bool IsLocked
         {
-            get { return isLocked; }
+            get => _isLocked;
             set
             {
-                isLocked = value;
+                _isLocked = value;
 
                 // Activer ou désactiver le XRGrabInteractable en fonction de l'état de verrouillage
-                if (grabInteractable != null)
+                if (_grabInteractable != null)
                 {
-                    grabInteractable.enabled = !isLocked;
+                    _grabInteractable.enabled = !_isLocked;
                 }
             }
         }
@@ -27,16 +27,16 @@ namespace DefaultNamespace
         void Start()
         {
             // Assurez-vous que le GameObject a un composant XRGrabInteractable
-            grabInteractable = GetComponent<XRGrabInteractable>();
+            _grabInteractable = GetComponent<XRGrabInteractable>();
 
-            if (grabInteractable == null)
+            if (_grabInteractable == null)
             {
                 Debug.LogError("Le GameObject doit avoir un composant XRGrabInteractable pour utiliser LockUnlockObject.");
             }
             else
             {
                 // Initialisez l'état de verrouillage au démarrage
-                IsLocked = isLocked;
+                IsLocked = _isLocked;
             }
         }
     }
