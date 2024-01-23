@@ -26,17 +26,6 @@ public class SpawnAndInteract : MonoBehaviour
         XRGrabInteractable xrGrabInteractable = spawnedObject.AddComponent<XRGrabInteractable>();
         xrGrabInteractable.trackRotation = false;
 
-        /*
-        Rigidbody rigidbody = spawnedObject.GetComponent<Rigidbody>();
-
-        if (rigidbody != null)
-        {
-            rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-            rigidbody.useGravity = false;
-            rigidbody.isKinematic = true;
-        }
-        */
-
         spawnedObject.AddComponent<TeleportationArea>();
         SetLayerRecursively(spawnedObject, LayerMask.NameToLayer("Grabbable"));
         
