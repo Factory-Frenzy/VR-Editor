@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
@@ -7,8 +8,10 @@ using Formatting = Newtonsoft.Json.Formatting;
 
 public class ExportJson : MonoBehaviour
 {
+    [SerializeField] public bool http = false;
+    
     [SerializeField] 
-    public string uploadPath = "http://10.191.92.139:3000/upload";
+    public string httpUploadPath = "http://10.191.92.139:3000/upload";
     
     public void SaveMap(String mapName)
     {
@@ -36,11 +39,21 @@ public class ExportJson : MonoBehaviour
             name = mapName,
             objectData = mapObjectDataList,
         };
-     
-        UploadMap(mapName + ".json", map);
+
+        string fileName = mapName + ".json";
+        string fileJson = CreateJson(fileName, map);
+
+        if (http)
+        {
+            SaveWithHttp(fileName, fileJson);
+        }
+        else
+        {
+            SaveToDisk(fileName, fileJson);
+        }
     }
 
-    private void UploadMap(string fileName, Map map)
+    private string CreateJson(string fileName, Map map)
     {
         // Création d'un objet contenant les données à envoyer
         var requestData = new
@@ -55,11 +68,32 @@ public class ExportJson : MonoBehaviour
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             Formatting = Formatting.Indented
         };
-        var data = JsonConvert.SerializeObject(requestData, jsonSettings);
+        return JsonConvert.SerializeObject(requestData, jsonSettings);
+    }
+
+    public bool CheckMapExist(string fileName)
+    {
+        string filePath = Path.Combine(Application.streamingAssetsPath, fileName + ".json");
+        return File.Exists(filePath);
+    }
+
+    private void SaveToDisk(string fileName, string json)
+    {
+        // Chemin complet du fichier
+        string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
+
+        // Écrit le JSON dans le fichier
+        File.WriteAllText(filePath, json);
+
+        Debug.Log("Exportation terminée. Données enregistrées dans " + filePath);
+    }
+
+    private void SaveWithHttp(string fileName, string json)
+    {
 
         // Envoi des données au serveur
-        UnityWebRequest request = UnityWebRequest.Post(uploadPath, data, "application/json");
-        request.SetRequestHeader("Content-Type", "application/json");
+        UnityWebRequest request = UnityWebRequest.Post(httpUploadPath, json, "application/json");
+        //request.SetRequestHeader("Content-Type", "application/json");
         
         // Envoi de la requête
         request.SendWebRequest();

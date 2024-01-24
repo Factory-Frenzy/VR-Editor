@@ -8,11 +8,19 @@ namespace Menu
     {
         public Button saveButton;
         public TMP_InputField inputField;
+        public TMP_Text errorText;
+
+        private ExportJson exportJson;
 
         protected override void Start()
         {
             base.Start();
             saveButton.onClick.AddListener(OnSave);
+            
+            GameObject obj = GameObject.Find("ExportManager");
+            exportJson = obj.GetComponent<ExportJson>();
+
+            CheckFileExist();
         }
         
         protected override void GoBack()
@@ -21,11 +29,21 @@ namespace Menu
             Show(false);
         }
 
+        private void CheckFileExist()
+        {
+            if (exportJson && !exportJson.http && exportJson.CheckMapExist(inputField.text))
+            {
+                errorText.text = "Attention le fichier existe déjà";
+            }
+            else
+            {
+                errorText.text = "";
+            }
+        }
+
         private void OnSave()
         {
             string mapName = inputField.text;
-            GameObject obj = GameObject.Find("ExportManager");
-            ExportJson exportJson = obj.GetComponent<ExportJson>();
             exportJson.SaveMap(mapName);
             Show(false);
         }
