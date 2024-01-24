@@ -9,6 +9,7 @@ namespace Menu
         public GameObject classic2PlatformObject;
         public GameObject classic3PlatformObject;
         public GameObject movePlatformObject;
+        public GameObject trampolinePlatformObject;
         public GameObject startPlatformObj;
         public GameObject endPlatformObj;
         
@@ -16,6 +17,7 @@ namespace Menu
         public Button classic2PlatformButton;
         public Button classic3PlatformButton;
         public Button movePlatformButton;
+        public Button trampolinePlatformButton;
         public Button startPlatformButton;
         public Button endPlatformButton;
 
@@ -28,6 +30,7 @@ namespace Menu
             classic2PlatformButton.onClick.AddListener(OnSpawnClassic360Platform);
             classic3PlatformButton.onClick.AddListener(OnSpawnClassic520Platform);
             movePlatformButton.onClick.AddListener(OnSpawnMovePlatform);
+            trampolinePlatformButton.onClick.AddListener(OnSpawnTrampolinePlatform);
             startPlatformButton.onClick.AddListener(OnSpawnStartPlatform);
             endPlatformButton.onClick.AddListener(OnSpawnEndPlatform);
         }
@@ -59,6 +62,12 @@ namespace Menu
         private void OnSpawnMovePlatform()
         {
             spawnAndInteract.SpawnAndInteractPrefabs(movePlatformObject);
+            Show(false);
+        }
+        
+        private void OnSpawnTrampolinePlatform()
+        {
+            spawnAndInteract.SpawnAndInteractPrefabs(trampolinePlatformObject);
             Show(false);
         }
         
