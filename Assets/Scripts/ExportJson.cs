@@ -26,10 +26,32 @@ public class ExportJson : MonoBehaviour
         {
             MapObjectData mapObjectData = new MapObjectData
             {
-                name = mapObject.name.Replace("(Clone)", ""),
+                prefabName = mapObject.name.Replace("(Clone)", ""),
+                type = ObjectType.Undefined,
+                dynamic = false,
+                speed = null,
                 position = mapObject.transform.position,
-                rotation = mapObject.transform.rotation
+                rotation = mapObject.transform.rotation,
             };
+            if (mapObjectData.prefabName == "Platform Move 520")
+            {
+                mapObjectData.dynamic = true;
+                mapObjectData.speed = 1f;
+                mapObjectData.endpoints = new ObjectEndpoints
+                {
+                    a = mapObject.transform.Find("EndpointA").transform.position,
+                    b = mapObject.transform.Find("EndpointB").transform.position,
+                };
+            }
+
+            if (mapObjectData.prefabName.Contains("Platform"))
+            {
+                mapObjectData.type = ObjectType.Platform;
+            }
+            if (mapObjectData.prefabName.Contains("Trap"))
+            {
+                mapObjectData.type = ObjectType.Trap;
+            }
 
             mapObjectDataList.Add(mapObjectData);
         }
@@ -55,20 +77,13 @@ public class ExportJson : MonoBehaviour
 
     private string CreateJson(string fileName, Map map)
     {
-        // Création d'un objet contenant les données à envoyer
-        var requestData = new
-        {
-            fileName,
-            fileContent = map,
-        };
-
         //var data = JsonUtility.ToJson(requestData);
         JsonSerializerSettings jsonSettings = new JsonSerializerSettings
         {
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             Formatting = Formatting.Indented
         };
-        return JsonConvert.SerializeObject(requestData, jsonSettings);
+        return JsonConvert.SerializeObject(map, jsonSettings);
     }
 
     public bool CheckMapExist(string fileName)
@@ -90,6 +105,13 @@ public class ExportJson : MonoBehaviour
 
     private void SaveWithHttp(string fileName, string json)
     {
+        
+        // Création d'un objet contenant les données à envoyer
+        var requestData = new
+        {
+            fileName,
+            fileContent = json,
+        };
 
         // Envoi des données au serveur
         UnityWebRequest request = UnityWebRequest.Post(httpUploadPath, json, "application/json");
@@ -116,9 +138,22 @@ public class ExportJson : MonoBehaviour
     [Serializable]
     public class MapObjectData
     {
-        public string name;
+        public string prefabName;
+        public ObjectType type;
+        public bool dynamic;
+        [JsonProperty(NullValueHandling=NullValueHandling.Ignore)]
+        public float? speed;
         public Vector3 position;
         public Quaternion rotation;
+        [JsonProperty(NullValueHandling=NullValueHandling.Ignore)]
+        public ObjectEndpoints endpoints;
+    }
+
+    [SerializeField]
+    public class ObjectEndpoints
+    {
+        public Vector3 a;
+        public Vector3 b;
     }
     
     [Serializable]
@@ -126,5 +161,12 @@ public class ExportJson : MonoBehaviour
     {
         public string name;
         public List<MapObjectData> objectData;
+    }
+    
+    public enum ObjectType
+    {
+        Undefined = 0,
+        Platform = 1,
+        Trap = 2,
     }
 }
