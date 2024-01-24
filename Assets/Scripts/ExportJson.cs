@@ -11,7 +11,7 @@ public class ExportJson : MonoBehaviour
     [SerializeField] public bool http = false;
     
     [SerializeField] 
-    public string uploadPath = "http://10.191.92.139:3000/upload";
+    public string httpUploadPath = "http://10.191.92.139:3000/upload";
     
     public void SaveMap(String mapName)
     {
@@ -89,7 +89,7 @@ public class ExportJson : MonoBehaviour
     {
 
         // Envoi des données au serveur
-        UnityWebRequest request = UnityWebRequest.Post(uploadPath, json, "application/json");
+        UnityWebRequest request = UnityWebRequest.Post(httpUploadPath, json, "application/json");
         //request.SetRequestHeader("Content-Type", "application/json");
         
         // Envoi de la requête
