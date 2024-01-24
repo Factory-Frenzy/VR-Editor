@@ -68,14 +68,17 @@ public class ExportJson : MonoBehaviour
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             Formatting = Formatting.Indented
         };
-        var data = JsonConvert.SerializeObject(requestData, jsonSettings);
+        return JsonConvert.SerializeObject(requestData, jsonSettings);
+    }
 
-        return data;
+    public bool CheckMapExist(string fileName)
+    {
+        string filePath = Path.Combine(Application.streamingAssetsPath, fileName + ".json");
+        return File.Exists(filePath);
     }
 
     private void SaveToDisk(string fileName, string json)
     {
-        
         // Chemin complet du fichier
         string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
 
