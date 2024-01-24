@@ -58,15 +58,10 @@ public class InteractionManager : MonoBehaviour
 
     private void OnSelect(InputAction.CallbackContext obj)
     {
-        print("OnSelect");
-
         var interactable = GetCurrentInteractable();
         if (!interactable || !interactable.gameObject) return;
-
-        print("inter " + interactable.name);
         
-        // todo: fix
-        //MenuManager.Instance().OpenBlockInteractionMenu(interactable.gameObject);
+        MenuManager.Instance().OpenBlockInteractionMenu(interactable.gameObject);
     }
 
     private void OnJoyStickMove(InputAction.CallbackContext context)
