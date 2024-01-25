@@ -7403,7 +7403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   http: 1
-  httpUploadPath: http://10.191.92.139:3000/upload
+  httpUploadPath: http://10.191.92.126:3000/upload
 --- !u!4 &848025543
 Transform:
   m_ObjectHideFlags: 0

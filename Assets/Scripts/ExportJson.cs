@@ -13,6 +13,12 @@ public class ExportJson : MonoBehaviour
     
     [SerializeField] 
     public string httpUploadPath = "http://10.191.92.139:3000/upload";
+
+    private readonly JsonSerializerSettings jsonSettings = new()
+    {
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+        Formatting = Formatting.Indented
+    };
     
     public void SaveMap(String mapName)
     {
@@ -82,12 +88,7 @@ public class ExportJson : MonoBehaviour
 
     private string CreateJson(string fileName, Map map)
     {
-        //var data = JsonUtility.ToJson(requestData);
-        JsonSerializerSettings jsonSettings = new JsonSerializerSettings
-        {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            Formatting = Formatting.Indented
-        };
+        //var data = JsonUtility.ToJson(requestData);;
         return JsonConvert.SerializeObject(map, jsonSettings);
     }
 
@@ -117,9 +118,10 @@ public class ExportJson : MonoBehaviour
             fileName,
             fileContent = json,
         };
+        var data = JsonConvert.SerializeObject(requestData, jsonSettings);
 
         // Envoi des données au serveur
-        UnityWebRequest request = UnityWebRequest.Post(httpUploadPath, json, "application/json");
+        UnityWebRequest request = UnityWebRequest.Post(httpUploadPath, data, "application/json");
         //request.SetRequestHeader("Content-Type", "application/json");
         
         // Envoi de la requête
