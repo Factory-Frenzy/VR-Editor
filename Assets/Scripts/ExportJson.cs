@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using MapObject;
 using UnityEngine;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
@@ -8,7 +9,7 @@ using Formatting = Newtonsoft.Json.Formatting;
 
 public class ExportJson : MonoBehaviour
 {
-    [SerializeField] public bool http = false;
+    [SerializeField] public bool http;
     
     [SerializeField] 
     public string httpUploadPath = "http://10.191.92.139:3000/upload";
@@ -26,10 +27,36 @@ public class ExportJson : MonoBehaviour
         {
             MapObjectData mapObjectData = new MapObjectData
             {
-                name = mapObject.name.Replace("(Clone)", ""),
+                prefabName = mapObject.name.Replace("(Clone)", ""),
+                type = ObjectType.Undefined,
+                dynamic = false,
+                speed = null,
                 position = mapObject.transform.position,
-                rotation = mapObject.transform.rotation
+                rotation = mapObject.transform.rotation,
             };
+            if (mapObjectData.prefabName == "Platform Move 520")
+            {
+                MovePlatform movePlatform = mapObject.GetComponentInChildren<MovePlatform>();
+                
+                print("movePlatform " + mapObject.name);
+                
+                mapObjectData.dynamic = true;
+                mapObjectData.speed = movePlatform.Speed;
+                mapObjectData.endpoints = new ObjectEndpoints
+                {
+                    a = movePlatform.EndPointA.position,
+                    b = movePlatform.EndPointB.position,
+                };
+            }
+
+            if (mapObjectData.prefabName.Contains("Platform"))
+            {
+                mapObjectData.type = ObjectType.Platform;
+            }
+            if (mapObjectData.prefabName.Contains("Trap"))
+            {
+                mapObjectData.type = ObjectType.Trap;
+            }
 
             mapObjectDataList.Add(mapObjectData);
         }
@@ -55,20 +82,13 @@ public class ExportJson : MonoBehaviour
 
     private string CreateJson(string fileName, Map map)
     {
-        // Création d'un objet contenant les données à envoyer
-        var requestData = new
-        {
-            fileName,
-            fileContent = map,
-        };
-
         //var data = JsonUtility.ToJson(requestData);
         JsonSerializerSettings jsonSettings = new JsonSerializerSettings
         {
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             Formatting = Formatting.Indented
         };
-        return JsonConvert.SerializeObject(requestData, jsonSettings);
+        return JsonConvert.SerializeObject(map, jsonSettings);
     }
 
     public bool CheckMapExist(string fileName)
@@ -90,6 +110,13 @@ public class ExportJson : MonoBehaviour
 
     private void SaveWithHttp(string fileName, string json)
     {
+        
+        // Création d'un objet contenant les données à envoyer
+        var requestData = new
+        {
+            fileName,
+            fileContent = json,
+        };
 
         // Envoi des données au serveur
         UnityWebRequest request = UnityWebRequest.Post(httpUploadPath, json, "application/json");
@@ -116,9 +143,22 @@ public class ExportJson : MonoBehaviour
     [Serializable]
     public class MapObjectData
     {
-        public string name;
+        public string prefabName;
+        public ObjectType type;
+        public bool dynamic;
+        [JsonProperty(NullValueHandling=NullValueHandling.Ignore)]
+        public float? speed;
         public Vector3 position;
         public Quaternion rotation;
+        [JsonProperty(NullValueHandling=NullValueHandling.Ignore)]
+        public ObjectEndpoints endpoints;
+    }
+
+    [SerializeField]
+    public class ObjectEndpoints
+    {
+        public Vector3 a;
+        public Vector3 b;
     }
     
     [Serializable]
@@ -126,5 +166,12 @@ public class ExportJson : MonoBehaviour
     {
         public string name;
         public List<MapObjectData> objectData;
+    }
+    
+    public enum ObjectType
+    {
+        Undefined = 0,
+        Platform = 1,
+        Trap = 2,
     }
 }

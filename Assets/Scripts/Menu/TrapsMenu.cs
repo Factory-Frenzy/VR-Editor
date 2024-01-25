@@ -7,12 +7,10 @@ namespace Menu
     {
         public GameObject bumperObject;
         public GameObject lancerObject;
-        public GameObject trampolineObject;
         public GameObject fanObject;
         
         public Button bumperButton;
         public Button lancerButton;
-        public Button trampolineButton;
         public Button fanButton;
 
         public SpawnAndInteract spawnAndInteract;
@@ -22,7 +20,6 @@ namespace Menu
             base.Start();
             bumperButton.onClick.AddListener(OnSpawnBumper);
             lancerButton.onClick.AddListener(OnSpawnLancer);
-            trampolineButton.onClick.AddListener(OnSpawnTrampoline);
             fanButton.onClick.AddListener(OnSpawnFan);
         }
         
@@ -41,12 +38,6 @@ namespace Menu
         private void OnSpawnLancer()
         {
             spawnAndInteract.SpawnAndInteractPrefabs(lancerObject);
-            Show(false);
-        }
-        
-        private void OnSpawnTrampoline()
-        {
-            spawnAndInteract.SpawnAndInteractPrefabs(trampolineObject);
             Show(false);
         }
         

@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.factoryfrenzy.package": {
-      "version": "git@github.com:Factory-Frenzy/Package.git",
+      "version": "https://github.com/Factory-Frenzy/Package.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "818528839f484093c0baea2547b5a28dec6bbbfa"
+      "hash": "8ea0bc2fdff8c757b2ec574d19a14c8edbe1b6de"
     },
     "com.unity.burst": {
       "version": "1.8.11",

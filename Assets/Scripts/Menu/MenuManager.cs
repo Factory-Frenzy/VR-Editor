@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -86,7 +87,7 @@ namespace Menu
 
         public void OpenBlockInteractionMenu(GameObject currentGameObject)
         {
-            if (!currentGameObject) return;
+            if (!currentGameObject || !currentGameObject.GetComponent<LockUnlockObject>()) return;
             menu.Show(false);
             platformsMenu.Show(false);
             trapsMenu.Show(false);
