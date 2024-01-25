@@ -6,6 +6,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
 using Formatting = Newtonsoft.Json.Formatting;
+using Object = System.Object;
 
 public class ExportJson : MonoBehaviour
 {
@@ -74,22 +75,21 @@ public class ExportJson : MonoBehaviour
         };
 
         string fileName = mapName + ".json";
-        string fileJson = CreateJson(fileName, map);
+        //string fileJson = CreateJson(map);
 
         if (http)
         {
-            SaveWithHttp(fileName, fileJson);
+            SaveWithHttp(fileName, map);
         }
         else
         {
-            SaveToDisk(fileName, fileJson);
+            SaveToDisk(fileName, map);
         }
     }
 
-    private string CreateJson(string fileName, Map map)
+    private string CreateJson(Object obj)
     {
-        //var data = JsonUtility.ToJson(requestData);;
-        return JsonConvert.SerializeObject(map, jsonSettings);
+        return JsonConvert.SerializeObject(obj, jsonSettings);
     }
 
     public bool CheckMapExist(string fileName)
@@ -98,30 +98,32 @@ public class ExportJson : MonoBehaviour
         return File.Exists(filePath);
     }
 
-    private void SaveToDisk(string fileName, string json)
+    private void SaveToDisk(string fileName, Map map)
     {
         // Chemin complet du fichier
         string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
 
+        string json = CreateJson(map);
+        
         // Écrit le JSON dans le fichier
         File.WriteAllText(filePath, json);
 
         Debug.Log("Exportation terminée. Données enregistrées dans " + filePath);
     }
 
-    private void SaveWithHttp(string fileName, string json)
+    private void SaveWithHttp(string fileName, Map map)
     {
         
         // Création d'un objet contenant les données à envoyer
         var requestData = new
         {
             fileName,
-            fileContent = json,
+            fileContent = map,
         };
-        var data = JsonConvert.SerializeObject(requestData, jsonSettings);
+        string json = CreateJson(requestData);
 
         // Envoi des données au serveur
-        UnityWebRequest request = UnityWebRequest.Post(httpUploadPath, data, "application/json");
+        UnityWebRequest request = UnityWebRequest.Post(httpUploadPath, json, "application/json");
         //request.SetRequestHeader("Content-Type", "application/json");
         
         // Envoi de la requête
