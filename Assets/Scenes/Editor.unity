@@ -7402,7 +7402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a38f4940604944ab941a490c65a54d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  http: 0
+  http: 1
   httpUploadPath: http://10.191.92.139:3000/upload
 --- !u!4 &848025543
 Transform:
