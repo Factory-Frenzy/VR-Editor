@@ -4,24 +4,28 @@ namespace MapObject
 {
     public class MovePlatform : MonoBehaviour
     {
-        [SerializeField] private Transform EndPointA;
-        [SerializeField] private Transform EndPointB;
-        private Transform target;
+        public Transform EndPointA;
+        public Transform EndPointB;
         public float Speed = 1.0f;
-        public bool Active { get; set; }
+        
+        private Transform target;
+        public bool active { get; set; }
+        
         void Start()
         {
-            Active = true;
-            // D�marre en se dirigeant vers le point A
+            active = true;
+            // Démarre en se dirigeant vers le point A
             target = EndPointA;
         }
+        
         void Update()
         {
             MoveTowardsTarget();
         }
+        
         void MoveTowardsTarget()
         {
-            if (!Active) return;
+            if (!active) return;
 
             if (target != null)
             {
@@ -31,7 +35,7 @@ namespace MapObject
                 transform.position = newPosition;
             }
 
-            // V�rifie si le GameObject a atteint la cible
+            // Vérifie si le GameObject a atteint la cible
             if (Vector3.Distance(transform.position, target.position) < 0.001f)
             {
                 // Alterne la cible

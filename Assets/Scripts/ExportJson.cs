@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using MapObject;
 using UnityEngine;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
@@ -8,7 +9,7 @@ using Formatting = Newtonsoft.Json.Formatting;
 
 public class ExportJson : MonoBehaviour
 {
-    [SerializeField] public bool http = false;
+    [SerializeField] public bool http;
     
     [SerializeField] 
     public string httpUploadPath = "http://10.191.92.139:3000/upload";
@@ -35,12 +36,16 @@ public class ExportJson : MonoBehaviour
             };
             if (mapObjectData.prefabName == "Platform Move 520")
             {
+                MovePlatform movePlatform = mapObject.GetComponentInChildren<MovePlatform>();
+                
+                print("movePlatform " + mapObject.name);
+                
                 mapObjectData.dynamic = true;
-                mapObjectData.speed = 1f;
+                mapObjectData.speed = movePlatform.Speed;
                 mapObjectData.endpoints = new ObjectEndpoints
                 {
-                    a = mapObject.transform.Find("EndpointA").transform.position,
-                    b = mapObject.transform.Find("EndpointB").transform.position,
+                    a = movePlatform.EndPointA.position,
+                    b = movePlatform.EndPointB.position,
                 };
             }
 
